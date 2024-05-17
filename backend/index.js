@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { createTable, showTable, tableContent, addRow } = require("./controllers/createTable");
-const { getTable, updateTable } = require("./controllers/editTable");
+const { getTable, updateTable, deleteTable, deleteRow } = require("./controllers/editTable");
 
 const app = express();
 app.use(cors());
@@ -24,6 +24,10 @@ app.post("/table", tableContent);
 app.post("/row", addRow);
 app.post("/singletable", getTable);
 app.put("/update", updateTable);
+app.post("/tabledelete", deleteTable);
+app.post("/rowdelete", deleteRow);
+
+
 
 
 

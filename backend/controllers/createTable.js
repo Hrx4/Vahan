@@ -60,11 +60,17 @@ const tableContent = asyncHandler(async (req, res) => {
   const addRow = asyncHandler(async (req, res) => {
     await client.connect();
     const {newRow , tableName} = req.body
+    console.log('====================================');
+    console.log(newRow , tableName);
+    console.log('====================================');
 
-    const fields = newRow.map((item)=> `${item.colName} ` ).join(', ')
-    const values = newRow.map((item)=> `'${item.value}' ` ).join(', ')
+    const fields = newRow.slice(1).map((item)=> `${item.colName} ` ).join(', ')
+    const values = newRow.slice(1).map((item)=> `'${item.value}' ` ).join(', ')
 
     const command = `INSERT INTO ${tableName} (id , ${fields}) VALUES ('${short.generate()}' , ${values})`;
+    console.log('====================================');
+    console.log(command);
+    console.log('====================================');
      client.query(command, (err, result) => {
       if (err) {
         console.error("Error creating table:", err);
