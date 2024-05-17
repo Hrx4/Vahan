@@ -10,7 +10,7 @@ interface AllData {
 }
 
 interface Props {
-  currentRow: {} | null,
+  currentRow: any,
   currentTable :CurrentTable[],
   setOpen :any
 }
@@ -30,7 +30,7 @@ const Fields:React.FC<Props> = ({ currentRow , currentTable , setOpen }) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const [allData, setAllData] = useState<AllData>({});
-  const dataType = {
+  const dataType :any = {
     text: "text",
     numeric: "number",
     date: "date",

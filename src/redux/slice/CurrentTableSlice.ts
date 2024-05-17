@@ -3,7 +3,7 @@ import axios from "axios";
 import backend from "../../backend";
 
 
-export const fetchCurrentTable = createAsyncThunk("fetchCurrentTable" , async ([table , showTable]) => {
+export const fetchCurrentTable = createAsyncThunk("fetchCurrentTable" , async ([table , showTable] :[String , string|null]) => {
     const url = 
     !showTable
         ? `${backend}table`

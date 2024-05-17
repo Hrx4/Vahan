@@ -7,7 +7,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { makeStateNull } from "../redux/slice/CurrentTableSlice";
 
 interface Props {
-  showTable: String | null;
+  showTable: string | null;
 }
 
 
@@ -58,6 +58,7 @@ const AddEntry: React.FC<Props> = ({ showTable }) => {
             <Fields
               currentRow={null}
               currentTable={state.currentTable.currentTable}
+              setOpen={null}
             />
           )
         ) : addData ? (
@@ -65,7 +66,7 @@ const AddEntry: React.FC<Props> = ({ showTable }) => {
             Select Table
           </div>
         ) : (
-          <EntityTable tableName={state.currentTable.tableName} tableList={state.currentTable.currentTable} />
+          <EntityTable  />
         )}
         </div>
       </div>

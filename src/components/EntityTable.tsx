@@ -73,7 +73,7 @@ const EntityTable = () => {
           state.currentTable.currentTable?.rows?.length!==0 ?
           <table className=" bg-blue-300  ">
             <thead>
-              {state.currentTable.currentTable?.fields?.map((item) => (
+              {state.currentTable.currentTable?.fields?.map((item:any) => (
                 <th className=" border p-3">{item.name}</th>
               ))}
               <th className=" border p-3">Action</th>
