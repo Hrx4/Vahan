@@ -17,9 +17,6 @@ app.listen(8080, () => {
   console.log(`Server is running on Port 8080`);
 });
 
-//  client.connect();
-
-//  const createTableQuery = `SELECT * FROM testing`;
 app.post("/", createTable);
 app.get("/", showTable);
 app.post("/table", tableContent);

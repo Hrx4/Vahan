@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const short = require("short-uuid");
-const pool = require("../connection");
+const {pool} = require("../connection");
 
 const createTable = asyncHandler(async (req, res) => {
   const client = await pool.connect();

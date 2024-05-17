@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const pool = require("../connection");
+const {pool} = require("../connection");
 
 const getTable = asyncHandler(async (req, res) => {
   const client = await pool.connect();
