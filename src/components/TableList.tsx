@@ -30,7 +30,7 @@ const TableList: React.FC<tablelist> = ({ setAddData, showTable }) => {
     setCheck(false);
   }, []);
 
-  const deleteTable = async(table)=>{
+  const deleteTable = async(table:string)=>{
     try {
       const response = await axios.post("http://localhost:8080/tabledelete", {
         tableName: table,

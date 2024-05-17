@@ -2,10 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-export const fetchCurrentTable = createAsyncThunk("fetchCurrentTable" , async ([table , showTable]) => {
-    console.log('====================================');
-    console.log({show : showTable });
-    console.log('====================================');
+export const fetchCurrentTable = createAsyncThunk("fetchCurrentTable" , async ({table , showTable}) => {
     const url = 
     !showTable
         ? "http://localhost:8080/table"
