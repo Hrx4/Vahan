@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchTable } from "../redux/slice/TableListSlice";
+import backend from "../backend";
 
 const CreateEntity = () => {
   interface entityList {
@@ -45,7 +46,7 @@ const CreateEntity = () => {
   const handleSubmitTable = async () => {
     if (tableName === "") return alert("Please add table name");
     try {
-      const response = await axios.post("http://localhost:8080/", {
+      const response = await axios.post(`${backend}`, {
         tableName: tableName,
         entityList: entityList,
       });
@@ -62,7 +63,7 @@ const CreateEntity = () => {
 
   return (
     <>
-      <div className="w-full mx-14 mt-8 h-[550px] p-5   mb-40 flex">
+      <div className="w-full mx-14 mt-8 h-[550px] p-5   bg-red-300  mb-40 flex">
         <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded-md shadow-md flex-1 overflow-y-scroll">
           <div className=" flex gap-6">
             <div className="mb-4">

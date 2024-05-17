@@ -4,6 +4,7 @@ import { fetchTable } from "../redux/slice/TableListSlice";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchCurrentTable } from "../redux/slice/CurrentTableSlice";
 import axios from "axios";
+import backend from "../backend";
 
 interface tablelist {
   setAddData: any;
@@ -32,7 +33,7 @@ const TableList: React.FC<tablelist> = ({ setAddData, showTable }) => {
 
   const deleteTable = async(table:string)=>{
     try {
-      const response = await axios.post("http://localhost:8080/tabledelete", {
+      const response = await axios.post(`${backend}tabledelete`, {
         tableName: table,
       });
       console.log("Response:", response.data);

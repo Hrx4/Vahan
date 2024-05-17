@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import backend from "../../backend";
 
 
-export const fetchCurrentTable = createAsyncThunk("fetchCurrentTable" , async ({table , showTable}) => {
+export const fetchCurrentTable = createAsyncThunk("fetchCurrentTable" , async ([table , showTable]) => {
     const url = 
     !showTable
-        ? "http://localhost:8080/table"
+        ? `${backend}table`
         : 
-        "http://localhost:8080/singletable";
+        `${backend}singletable`;
     try {
       const response = await axios.post(url, {
         tableName: table,

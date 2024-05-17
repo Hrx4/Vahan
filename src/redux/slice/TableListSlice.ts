@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import backend from "../../backend";
 
 
 
 export const fetchTable = createAsyncThunk("fetchTable" , async()=>{
     try {
-        const response = await axios.get("http://localhost:8080/");
+        const response = await axios.get(`${backend}`)
         console.log("Response:", response.data);
         return response.data
         // Handle success

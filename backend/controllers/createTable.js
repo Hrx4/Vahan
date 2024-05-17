@@ -1,86 +1,79 @@
-const asyncHandler = require('express-async-handler')
-const short = require('short-uuid');
-const client = require("../connection");
+const asyncHandler = require("express-async-handler");
+const short = require("short-uuid");
+const pool = require("..");
 
 const createTable = asyncHandler(async (req, res) => {
-    await client.connect();
-    const {entityList , tableName} = req.body
-    console.log('====================================');
-    console.log(entityList , tableName);
-    console.log('====================================');
-    const command = `CREATE TABLE ${tableName} (id STRING , ${
-      entityList.map((item)=> `${item.entity} ${item.type}` ).join(', ')
-  })`;
-    
-     client.query(command, (err, result) => {
-      if (err) {
-        console.error("Error creating table:", err);
-        return res.status(500).send("Error creating table");
-      }
-      console.log("Table created successfully" + result);
-      return res.status(200).json(result);
-    });
-  })
+  const client = await pool.connect();
+  const { entityList, tableName } = req.body;
+  try {
+    const command = `CREATE TABLE ${tableName} (id STRING , ${entityList
+      .map((item) => `${item.entity} ${item.type}`)
+      .join(", ")})`;
 
-  const showTable = asyncHandler(async (req, res) => {
-      await client.connect();
-      const command = `SELECT table_name FROM information_schema.tables WHERE table_schema='public'`;
-      
-      client.query(command, (err, result) => {
-        if (err) {
-          console.error("Error creating table:", err);
-          return res.status(500).send("Error creating table");
-        }
-        console.log("Table created successfully" + result.rows);
-      //   client.end()
-        return res.status(200).json(result.rows)
-      });
-    })
+    const result = await client.query(command);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
+  }
+  return client.release(true);
+});
 
-  
-
+const showTable = asyncHandler(async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const command = `SELECT table_name FROM information_schema.tables WHERE table_schema='public'`;
+    const result = await client.query(command);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
+  }
+  return client.release(true);
+});
 
 const tableContent = asyncHandler(async (req, res) => {
-    await client.connect();
-    const {tableName} = req.body
+  const client = await pool.connect();
+  const { tableName } = req.body;
+  try {
     const command = `SELECT column_name, data_type FROM information_schema.columns WHERE 
     table_name = '${tableName}'`;
-    
-     client.query(command, (err, result) => {
-      if (err) {
-        console.error("Error creating table:", err);
-        return res.status(500).send("Error creating table");
-      }
-      console.log("Table created successfully" + result);
-      return res.status(200).json(result.rows);
-    });
-  })
 
+    const result = await client.query(command);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
+  }
+  return client.release(true);
+});
 
-  const addRow = asyncHandler(async (req, res) => {
-    await client.connect();
-    const {newRow , tableName} = req.body
-    console.log('====================================');
-    console.log(newRow , tableName);
-    console.log('====================================');
+const addRow = asyncHandler(async (req, res) => {
+  const client = await pool.connect();
+  const { newRow, tableName } = req.body;
 
-    const fields = newRow.slice(1).map((item)=> `${item.colName} ` ).join(', ')
-    const values = newRow.slice(1).map((item)=> `'${item.value}' ` ).join(', ')
+  try {
+    const fields = newRow
+      .slice(1)
+      .map((item) => `${item.colName} `)
+      .join(", ");
+    const values = newRow
+      .slice(1)
+      .map((item) => `'${item.value}' `)
+      .join(", ");
 
     const command = `INSERT INTO ${tableName} (id , ${fields}) VALUES ('${short.generate()}' , ${values})`;
-    console.log('====================================');
-    console.log(command);
-    console.log('====================================');
-     client.query(command, (err, result) => {
-      if (err) {
-        console.error("Error creating table:", err);
-        return res.status(500).send("Error creating table");
-      }
-      console.log("Table created successfully" + result);
-      return res.status(200).json(result);
-    });
-  })
+    const result = await client.query(command);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
+  }
+  return client.release(true);
+});
 
-
-
-  module.exports = {createTable , showTable , tableContent , addRow}
+module.exports = { createTable, showTable, tableContent, addRow };

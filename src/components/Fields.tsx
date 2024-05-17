@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentTable } from "../redux/slice/CurrentTableSlice";
 import { ThunkDispatch } from "@reduxjs/toolkit";
+import backend from "../backend";
 
 interface AllData {
   [key: string]: string;
@@ -14,19 +15,10 @@ interface Props {
   setOpen :any
 }
 
-interface CurrentRow{
-  
-}
-
 interface CurrentTable {
   column_name: string;
   data_type: string;
 }
-
-// interface CurrentTableArray{
-//     currentTable :CurrentTable[],
-
-// }
 
 const Fields:React.FC<Props> = ({ currentRow , currentTable , setOpen }) => {
   console.log('====================================');
@@ -69,7 +61,7 @@ const Fields:React.FC<Props> = ({ currentRow , currentTable , setOpen }) => {
     console.log("====================================");
     if (currentRow) {
       try {
-        const response = await axios.put("http://localhost:8080/update", {
+        const response = await axios.put(`${backend}update`, {
           tableName: state.currentTable.tableName,
           newRow: newRow,
         });
@@ -90,7 +82,7 @@ const Fields:React.FC<Props> = ({ currentRow , currentTable , setOpen }) => {
       }
     } else {
       try {
-        const response = await axios.post("http://localhost:8080/row", {
+        const response = await axios.post(`${backend}row`, {
           tableName: state.currentTable.tableName,
           newRow: newRow,
         });

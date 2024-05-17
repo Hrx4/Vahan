@@ -1,10 +1,11 @@
 import { Modal } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import Fields from "./Fields"
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchCurrentTable } from "../redux/slice/CurrentTableSlice";
+import backend from "../backend";
 
 const EntityTable = () => {
   const [open, setOpen] = useState(false);
@@ -21,9 +22,9 @@ const EntityTable = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
 
-  const handleEdit = async (item) => {
+  const handleEdit = async (item :any) => {
     try {
-      const url = "http://localhost:8080/table";
+      const url = `${backend}table`;
       const response = await axios.post(url, {
         tableName: state.currentTable.tableName,
       });
@@ -39,9 +40,9 @@ const EntityTable = () => {
     }
   };
 
-  const handleDelete = async (item) => {
+  const handleDelete = async (item :string) => {
     try {
-      const url = "http://localhost:8080/rowdelete";
+      const url = `${backend}rowdelete`;
       const response = await axios.post(url, {
         tableName: state.currentTable.tableName,
         rowId : item
