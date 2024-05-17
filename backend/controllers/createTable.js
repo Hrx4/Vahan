@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const short = require("short-uuid");
-const pool = require("..");
+const pool = require("../connection");
 
 const createTable = asyncHandler(async (req, res) => {
   const client = await pool.connect();
@@ -13,9 +13,7 @@ const createTable = asyncHandler(async (req, res) => {
     const result = await client.query(command);
     res.status(200).json(result);
   } catch (error) {
-    console.log("====================================");
-    console.log(error);
-    console.log("====================================");
+    res.status(500).json({ message: error });
   }
   return client.release(true);
 });
@@ -27,9 +25,7 @@ const showTable = asyncHandler(async (req, res) => {
     const result = await client.query(command);
     res.status(200).json(result.rows);
   } catch (error) {
-    console.log("====================================");
-    console.log(error);
-    console.log("====================================");
+    res.status(500).json({ message: error });
   }
   return client.release(true);
 });
@@ -44,9 +40,7 @@ const tableContent = asyncHandler(async (req, res) => {
     const result = await client.query(command);
     res.status(200).json(result.rows);
   } catch (error) {
-    console.log("====================================");
-    console.log(error);
-    console.log("====================================");
+    res.status(500).json({ message: error });
   }
   return client.release(true);
 });
@@ -69,9 +63,7 @@ const addRow = asyncHandler(async (req, res) => {
     const result = await client.query(command);
     res.status(200).json(result);
   } catch (error) {
-    console.log("====================================");
-    console.log(error);
-    console.log("====================================");
+    res.status(500).json({ message: error });
   }
   return client.release(true);
 });
