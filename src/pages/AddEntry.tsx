@@ -33,8 +33,17 @@ const AddEntry: React.FC<Props> = ({ showTable }) => {
 
   return (
     <>
-      <div className="w-full mx-14 mt-8 h-[550px] p-5 bg-red-300  mb-40 flex">
-        <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded-md shadow-md flex-1 overflow-y-scroll">
+      <div className="w-full mx-14 mt-8 h-[550px] p-5 bg-red-300  mb-40 flex flex-col">
+        {
+          showTable ?
+          <div className=" w-full items-center justify-center  flex font-bold">
+          Show Table
+        </div>: <div className=" w-full items-center justify-center  flex font-bold">
+          Add Entry 
+        </div>
+        }
+        <div className=" flex w-full  h-[550px]">
+        <div className="max-w-md  mx-auto mt-8 p-6 bg-gray-100 rounded-md shadow-md flex-1 overflow-y-scroll">
           <TableList
             showTable={showTable}
             setAddData={setAddData}
@@ -48,6 +57,7 @@ const AddEntry: React.FC<Props> = ({ showTable }) => {
           ) : (
             <Fields
               currentRow={null}
+              currentTable={state.currentTable.currentTable}
             />
           )
         ) : addData ? (
@@ -57,6 +67,7 @@ const AddEntry: React.FC<Props> = ({ showTable }) => {
         ) : (
           <EntityTable tableName={state.currentTable.tableName} tableList={state.currentTable.currentTable} />
         )}
+        </div>
       </div>
     </>
   );

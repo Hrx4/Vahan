@@ -2,7 +2,9 @@ import { Modal } from "@mui/material";
 import React, { useState } from "react";
 import Fields from "./Fields"
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { fetchCurrentTable } from "../redux/slice/CurrentTableSlice";
 
 const EntityTable = () => {
   const [open, setOpen] = useState(false);
@@ -16,6 +18,8 @@ const EntityTable = () => {
     return state;
     
   });
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
 
   const handleEdit = async (item) => {
     try {
@@ -28,6 +32,24 @@ const EntityTable = () => {
       setCurrentTable(response.data);
       setCurrentRow(item);
       setOpen(true);
+      // Handle success
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
+    }
+  };
+
+  const handleDelete = async (item) => {
+    try {
+      const url = "http://localhost:8080/rowdelete";
+      const response = await axios.post(url, {
+        tableName: state.currentTable.tableName,
+        rowId : item
+      });
+      console.log("Response:", response.data);
+      dispatch(fetchCurrentTable([state.currentTable.tableName, 'showtable']));
+
+      //   setstate.currentTable.currentTable(response.data);
       // Handle success
     } catch (error) {
       console.error("Error:", error);
@@ -75,7 +97,7 @@ const EntityTable = () => {
                       Edit
                     </button>
                     <button
-                      // onClick={handleSubmitTable}
+                      onClick={() => handleDelete(item.id)}
                       className="bg-red-500 text-white px-4 py-2 m-1 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                     >
                       Delete
@@ -94,6 +116,8 @@ const EntityTable = () => {
       <Modal open={open} onClose={() => setOpen(false)}>
         <Fields
           currentRow={currentRow}
+          currentTable={currentTable}
+          setOpen={setOpen}
         />
       </Modal>
     </>

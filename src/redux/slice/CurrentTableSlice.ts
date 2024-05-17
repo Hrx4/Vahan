@@ -30,17 +30,23 @@ const currentTableSlice = createSlice({
     name: 'currenttable',
     initialState: {
         isLoading: false,
-        currentTable: [],
+        currentTable: [] ,
         tableName: null,
+        modalOpen :false,
         isError: false,
         errorMessage: null // Add an error message state for better error handling
       },
       reducers: {
-        makeStateNull : (state , action)=>{
+        makeStateNull : (state )=>{
             state.currentTable=[]
             state.tableName=null
-        }
-
+        },
+    //     openModal : (state , action)=>{
+    //       state.modalOpen=true
+    //   },
+    //   closeModal : (state , action)=>{
+    //     state.modalOpen=false
+    // }
       },
 
     extraReducers: (builder) => {
@@ -62,7 +68,7 @@ const currentTableSlice = createSlice({
     
 })
 
-export const {makeStateNull} = currentTableSlice.actions
+export const {makeStateNull } = currentTableSlice.actions
 
 
 export default currentTableSlice
