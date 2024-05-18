@@ -1,3 +1,14 @@
+# Instructions to run the app
+
+## For frontend
+1. npm install
+2. npm run dev
+
+## For backend
+1. cd backend
+2. npm install
+3. npm start
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
